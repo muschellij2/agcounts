@@ -18,12 +18,12 @@ Rcpp::NumericVector gDownSample(Rcpp::NumericVector X, int sf){
     acc += X[i]; sig2[i] = acc;
   }
   // select
-  Rcpp::NumericVector select(X.size() / (sf*10));
+  Rcpp::NumericVector select(X.size() / (sf*10) + 1);
   for(int i = 1; i <= select.size(); i++){
     select[i] = i * (sf*10);
   }
   // var
-  Rcpp::NumericVector var(X.size() / (sf*10));
+  Rcpp::NumericVector var(X.size() / (sf*10) + 1);
   for(int i = 0; i < select.size(); i++){
     var[i] = (sig2[select[i + 1] - 1] - sig2[select[i] - 1]) /  (select[i+1] - select[i]);
   }
