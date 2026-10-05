@@ -41,7 +41,10 @@ calculate_counts <- function(
     raw <- .check_idle_sleep(raw, frequency, epoch, verbose, tz)
 
     if(data_start != t1){
+      times <- seq(data_start, t1, 1/frequency)
+      times <- times[times < t1]
       raw <-
+        times %>%
         seq(data_start, (t1-1/frequency), 1/frequency) %>%
         {data.frame(
           time = as.POSIXct(., tz), X = rep(raw[["X"]][1], length(.)),
